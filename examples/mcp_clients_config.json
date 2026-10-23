@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "MCP Client configuration examples for PanGo PDS Place & Route Expert Server",
+  "claude_desktop_config": {
+    "mcpServers": {
+      "pango-pds-pnr-expert": {
+        "command": "python",
+        "args": [
+          "-m",
+          "pango_pds_mcp"
+        ]
+      }
+    }
+  },
+  "cursor_or_continue_config": {
+    "mcpServers": {
+      "pango-pds-pnr-expert": {
+        "command": "python",
+        "args": [
+          "-m",
+          "pango_pds_mcp"
+        ],
+        "env": {}
+      }
+    }
+  },
+  "antigravity_gemini_cli_config": {
+    "mcpServers": {
+      "pango-pds-pnr-expert": {
+        "command": "python",
+        "args": [
+          "-m",
+          "pango_pds_mcp"
+        ]
+      }
+    }
+  }
+}
