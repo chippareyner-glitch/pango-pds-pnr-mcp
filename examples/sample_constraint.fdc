@@ -1,0 +1,51 @@
+# ==============================================================================
+# PanGo PDS Standard User Constraint Template (.fdc)
+# Target Device: PanGo Logos-2 PG2L200H-6FBB484
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Primary Clock Constraints (SDC format)
+# ------------------------------------------------------------------------------
+create_clock -name {clk_sys}   -period {20.000} [get_ports {clk_50m}]
+create_clock -name {clk_pixel} -period {13.468} [get_ports {cam_pclk}] ;# 74.25MHz (720p@60Hz)
+
+# ------------------------------------------------------------------------------
+# 2. Clock Uncertainty & Asynchronous Clock Groups
+# ------------------------------------------------------------------------------
+set_clock_uncertainty -setup 0.150 [get_clocks {clk_sys}]
+set_clock_uncertainty -setup 0.150 [get_clocks {clk_pixel}]
+
+set_clock_groups -asynchronous \
+    -group [get_clocks {clk_sys}] \
+    -group [get_clocks {clk_pixel}]
+
+# ------------------------------------------------------------------------------
+# 3. False Paths (Static Keys / LEDs)
+# ------------------------------------------------------------------------------
+set_false_path -from [get_ports {rst_n_key}]
+set_false_path -to   [get_ports {led_status[*]}]
+
+# ------------------------------------------------------------------------------
+# 4. Primary I/O Pinout and Voltage Attributes (PanGo FDC Format)
+# ------------------------------------------------------------------------------
+# Dedicated Global Clock Input (Bank 0)
+define_attribute {p:clk_50m}         {PAP_IO_LOC}      {Y12}
+define_attribute {p:clk_50m}         {PAP_IO_VCCIO}    {3.3}
+define_attribute {p:clk_50m}         {PAP_IO_STANDARD} {LVCMOS33}
+
+# Reset Button
+define_attribute {p:rst_n_key}       {PAP_IO_LOC}      {K18}
+define_attribute {p:rst_n_key}       {PAP_IO_VCCIO}    {3.3}
+define_attribute {p:rst_n_key}       {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:rst_n_key}       {PAP_IO_PULLUP}   {TRUE}
+
+# Video DVP Data (Packed directly into IOB registers)
+define_attribute {p:cam_data[0]}     {PAP_IO_LOC}      {U14}
+define_attribute {p:cam_data[0]}     {PAP_IO_VCCIO}    {3.3}
+define_attribute {p:cam_data[0]}     {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:cam_data[0]}     {PAP_IOB_REG}     {TRUE}
+
+define_attribute {p:cam_data[1]}     {PAP_IO_LOC}      {U15}
+define_attribute {p:cam_data[1]}     {PAP_IO_VCCIO}    {3.3}
+define_attribute {p:cam_data[1]}     {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:cam_data[1]}     {PAP_IOB_REG}     {TRUE}
