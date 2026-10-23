@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pango-pds-pnr-mcp"
+version = "1.0.0"
+description = "Model Context Protocol (MCP) Server for PanGo PDS Place & Route and Physical Constraints"
+readme = "README.md"
+authors = [{ name = "chippareyner-glitch" }]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
+]
+requires-python = ">=3.8"
+dependencies = [
+    "mcp>=1.0.0"
+]
+
+[project.scripts]
+pds-mcp = "pango_pds_mcp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pango_pds_mcp*"]
